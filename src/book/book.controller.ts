@@ -25,7 +25,7 @@ export class BookController {
    */
   @Get()
   findAll() {
-    return this.bookService.findAll();
+    return this.bookService.findAllBook();
   }
 
   /**
@@ -36,7 +36,7 @@ export class BookController {
    */
   @Get(':bookId')
   findOne(@Param('bookId') bookId: string) {
-    return this.bookService.findOne(bookId);
+    return this.bookService.findOneBook(bookId);
   }
 
   @Get(':bookId/owner')
@@ -53,7 +53,7 @@ export class BookController {
    */
   @Put(':bookId')
   update(@Param('bookId') bookId: string, @Body() updateBookDto: UpdateBookDto) {
-    return this.bookService.update(bookId, updateBookDto);
+    return this.bookService.updateOneBook(bookId, updateBookDto);
   }
 
   /**
@@ -64,6 +64,6 @@ export class BookController {
    */
   @Delete(':id')
   remove(@Param('id') bookId: string) {
-    return this.bookService.remove(bookId);
+    return this.bookService.removeOneBook(bookId);
   }
 }

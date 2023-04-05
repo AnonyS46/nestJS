@@ -85,7 +85,7 @@ export class BookService {
    * @returns 
    * @author Cường
    */
-  async findAll() {
+  async findAllBook() {
     let bookDtoListResult:BookDto[] = [] ;
 
     // Đổ dữ liệu vào bookDtoListResult    
@@ -115,7 +115,7 @@ export class BookService {
    * @returns 
    * @author Cường
    */
-  findOne(bookId: string) {
+  findOneBook(bookId: string) {
     return this.bookModel.findById(bookId).populate('owner');;
   }
 
@@ -126,7 +126,7 @@ export class BookService {
    * @returns 
    * @author Cường
    */
-  async update(bookId: string, updateBookDto: UpdateBookDto) {
+  async updateOneBook(bookId: string, updateBookDto: UpdateBookDto) {
     let book : Book = await this.bookModel.findById(bookId);
 
     //Validate thông tin sách
@@ -149,7 +149,7 @@ export class BookService {
    * @returns 
    * @author Cường
    */
-  remove(bookId: string):any {
+  removeOneBook(bookId: string):any {
     return this.bookModel.findByIdAndDelete(bookId);
   }
 }
