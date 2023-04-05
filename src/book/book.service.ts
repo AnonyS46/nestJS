@@ -149,7 +149,7 @@ export class BookService {
    * @returns 
    * @author Cường
    */
-  remove(bookId: string) {
+  remove(bookId: string):any {
     return this.bookModel.findByIdAndDelete(bookId);
   }
 }

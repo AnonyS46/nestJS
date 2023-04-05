@@ -21,29 +21,49 @@ export class BookController {
   /**
    * API lấy danh sách thông tin các cuốn sách
    * @returns 
+   * @author Cường
    */
   @Get()
   findAll() {
     return this.bookService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bookService.findOne(id);
+  /**
+   * API lấy thông tin chi tiết một cuốn sách
+   * @param bookId 
+   * @returns 
+   * @author Cường
+   */
+  @Get(':bookId')
+  findOne(@Param('bookId') bookId: string) {
+    return this.bookService.findOne(bookId);
   }
 
-  @Get(':id/owner')
-  findOwnerById(@Param('id') id: string) {
-    return this.bookService.findOwnerById(id);
+  @Get(':bookId/owner')
+  findOwnerById(@Param('bookId') bookId: string) {
+    return this.bookService.findOwnerById(bookId);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
-    return this.bookService.update(id, updateBookDto);
+  /**
+   * API cập nhật thông tin cho một cuốn sách
+   * @param bookId 
+   * @param updateBookDto 
+   * @returns 
+   * @author Cường
+   */
+  @Put(':bookId')
+  update(@Param('bookId') bookId: string, @Body() updateBookDto: UpdateBookDto) {
+    return this.bookService.update(bookId, updateBookDto);
   }
 
+  /**
+   * API xóa một cuốn sách
+   * @param bookId 
+   * @returns 
+   * @author Cường
+   */
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.bookService.remove(id);
+  remove(@Param('id') bookId: string) {
+    return this.bookService.remove(bookId);
   }
 }
