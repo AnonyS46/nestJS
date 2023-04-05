@@ -1,13 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Put,
-} from '@nestjs/common';
+import {Controller,Get,Post,Body,Param,Delete,Put,} from '@nestjs/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
@@ -17,9 +8,10 @@ export class StudentController {
   constructor(private readonly studentService: StudentService) {}
 
   /**
-   * API tạo 1 học sinh
+   * API tạo mới 1 học sinh
    * @param createStudentDto 
    * @returns 
+   * @author Cường
    */
   @Post()
   create(@Body() createStudentDto: CreateStudentDto) {
@@ -29,6 +21,7 @@ export class StudentController {
   /**
    * API lấy nhiều học sinh
    * @returns 
+   * @author Cường
    */
   @Get()
   findAll() {
@@ -52,6 +45,7 @@ export class StudentController {
    * @param studentId 
    * @param updateStudentDto 
    * @returns 
+   * @author Cường
    */
   @Put(':studentId')
   update(@Param('studentId') studentId: string, @Body() updateStudentDto: UpdateStudentDto) {

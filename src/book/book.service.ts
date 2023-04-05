@@ -28,46 +28,63 @@ export class BookService {
    * @author Cường
    */
   async createOneBook(createBookDto: CreateBookDto) {
+    
+    //VALIDATE
+    if(this.validateBookData(createBookDto)) {
+      // TẠO VÀ LƯU XUỐNG DB
+      let book:Book = new Book();
+      book.title = createBookDto.title;
+      book.author = createBookDto.author;
+      book.totalPage = createBookDto.totalPage;
+  
+      //lấy ra học sinh và thêm dữ liệu vào trường books cho học sinh
+      if(createBookDto.ownerId) {
+        let owner:Student = await this.studentService.findOne(createBookDto.ownerId);
+        book.owner = owner;
+        owner.books.push(book);
+        await this.studentService.studentModel.findByIdAndUpdate(createBookDto.ownerId,owner,{new : true});
+      }
+      const createdBook = await new this.bookModel(book).save();
+  
+      
+      // RETURN
+      return createdBook;
+    }
+
+  }
+
+  /**
+   * kiểm tra thông tin đầu vào của quyển sách được thêm
+   * @param createBookDto 
+   * @returns 
+   */
+  validateBookData(data:any):boolean {
+    let check:boolean = true;
+
     // VALIDATE
-    if ( !createBookDto.title ) {
+    if ( !data.title ) {
+      check = false;
       throw new BadRequestException('Tiêu đề không được để rỗng');
     }
 
-    if( !createBookDto.totalPage || !Number.isInteger(Number(createBookDto.totalPage))) {
+    if( !data.totalPage || !Number.isInteger(Number(data.totalPage))) {
+      check = false;
       throw new BadRequestException('Số trang phải hợp lệ');
     }
-
-    // if( !createBookDto.ownerId ) {
-    //   throw new BadRequestException('Mã học sinh không được rỗng');
-    // }
-
-    if( !createBookDto.author ) {
+    if( !data.author ) {
+      check = false;
       throw new BadRequestException('Tên tác giả không được rỗng');
     }
 
-    // TẠO VÀ LƯU XUỐNG DB
-    let book:Book = new Book();
-    book.title = createBookDto.title;
-    book.author = createBookDto.author;
-    book.totalPage = createBookDto.totalPage;
-
-    //lấy ra học sinh và thêm dữ liệu vào trường books cho học sinh
-    if(createBookDto.ownerId) {
-      let owner:Student = await this.studentService.findOne(createBookDto.ownerId);
-      book.owner = owner;
-      owner.books.push(book);
-      await this.studentService.studentModel.findByIdAndUpdate(createBookDto.ownerId,owner,{new : true});
-    }
-    const createdBook = await new this.bookModel(book).save();
-
-    
-    // RETURN
-    return createdBook;
+    return check;
   }
 
-  
 
-
+  /**
+   * Lấy ra toàn bộ sách trong db
+   * @returns 
+   * @author Cường
+   */
   async findAll() {
     let bookDtoListResult:BookDto[] = [] ;
 
@@ -85,21 +102,54 @@ export class BookService {
   /**
    * Tìm chủ sở hữu của một cuốn sách
    * @param bookId 
+   * @author Cường
    */
   async findOwnerById(bookId:string) {
     return await this.bookModel.findById(bookId).populate('owner');
-
   }
 
+
+  /**
+   * Lấy thông tin chi tiết một cuốn sách
+   * @param bookId 
+   * @returns 
+   * @author Cường
+   */
   findOne(bookId: string) {
-    return `This action returns a #${bookId} book`;
+    return this.bookModel.findById(bookId).populate('owner');;
   }
 
-  update(bookId: string, updateBookDto: UpdateBookDto) {
-    return `This action updates a #${bookId} book`;
-  }
+  /**
+   * Cập nhật thông tin sách
+   * @param bookId 
+   * @param updateBookDto 
+   * @returns 
+   * @author Cường
+   */
+  async update(bookId: string, updateBookDto: UpdateBookDto) {
+    let book : Book = await this.bookModel.findById(bookId);
 
+    //Validate thông tin sách
+    if(this.validateBookData(updateBookDto)) {
+
+      book.title = updateBookDto.title;
+      book.author = updateBookDto.author;
+      book.totalPage = updateBookDto.totalPage;
+
+      let updatedBook = await this.bookModel.findByIdAndUpdate(bookId, book,{new:true});
+      updatedBook = await this.bookModel.findById(bookId);
+
+      return updatedBook;
+    }
+  }
+  
+  /**
+   * Xóa 1 cuốn sách
+   * @param bookId 
+   * @returns 
+   * @author Cường
+   */
   remove(bookId: string) {
-    return `This action removes a #${bookId} book`;
+    return this.bookModel.findByIdAndDelete(bookId);
   }
 }

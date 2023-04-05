@@ -5,7 +5,7 @@ import { Book } from 'src/book/schema/book.schema';
 
 export type StudentDocument = HydratedDocument<Student>;
 
-@Schema()
+@Schema({timestamps:true})
 export class Student {
   @Prop({ required: true })
   name: string;
