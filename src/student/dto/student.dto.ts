@@ -3,16 +3,16 @@ import { ApiProperty } from "@nestjs/swagger";
 export class StudentDTO {
 
   @ApiProperty()
-  name: string;
+  name: string; //họ tên
   
   @ApiProperty()
-  age: number;
+  age: number; // tuổi
 
   @ApiProperty()
-  address:string;
+  address:string; // địa chỉ
 
   @ApiProperty()
-  phone:string;
+  phone:string; //số điện thoại
 
   constructor(name: string, age: number, address: string, phone:string) {
     this.name = name;

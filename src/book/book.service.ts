@@ -105,7 +105,8 @@ export class BookService {
    * @author Cường
    */
   async findOwnerById(bookId:string) {
-    return await this.bookModel.findById(bookId).populate('owner');
+    let ownerResult = await this.bookModel.findById(bookId).populate('owner');
+    return ownerResult.owner;
   }
 
 

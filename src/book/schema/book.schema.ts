@@ -8,18 +8,18 @@ export type BookDocument = HydratedDocument<Book>;
 @Schema()
 export class Book {
   @Prop({ required: true })
-  title: string;
+  title: string; // tiêu đề
 
   @Prop({ required: true })
-  totalPage: number;
+  totalPage: number; //tổng số trang
 
   
   @Prop({ required: true })
-  author: string;
+  author: string; //tác giả
   
   @Prop({  type: mongoose.Schema.Types.ObjectId, ref: 'Student'})
   @Type(() => Student)
-  owner: Student;
+  owner: Student; //chủ sở hữu
   
 }
 

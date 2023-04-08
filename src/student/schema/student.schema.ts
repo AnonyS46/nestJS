@@ -8,20 +8,20 @@ export type StudentDocument = HydratedDocument<Student>;
 @Schema({timestamps:true})
 export class Student {
   @Prop({ required: true })
-  name: string;
+  name: string; // họ tên
 
   @Prop({ required: true })
-  age: number;
+  age: number; //tuổi
   
   @Prop({ required: true })
-  address: string;
+  address: string; //địa chỉ
 
   @Prop({ required: true })
-  phone: string;
+  phone: string; // số điện thoại
 
   @Prop([{type:mongoose.Schema.Types.ObjectId ,ref: 'Book'}])
   @Type(()=>Book)
-  books:Book[];
+  books:Book[]; // danh sách sách sở hữu
 
 }
 

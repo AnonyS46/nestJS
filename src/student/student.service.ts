@@ -39,8 +39,10 @@ export class StudentService {
     studentNew.address=createStudentDto.address;
     studentNew.phone=createStudentDto.phone;
     if(createStudentDto.bookId) {
-      studentNew.books = [];
-      studentNew.books.push(await this.bookService.bookModel.findById(createStudentDto.bookId));
+      if(!this.bookService.findOwnerById(createStudentDto.bookId)) {
+        studentNew.books = [];
+        studentNew.books.push(await this.bookService.bookModel.findById(createStudentDto.bookId));
+      }
     }
     const createdStudent = await new this.studentModel(studentNew).save();
 

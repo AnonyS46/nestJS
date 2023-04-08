@@ -3,13 +3,13 @@ import { ApiProperty } from "@nestjs/swagger";
 export class BookDto {
 
     @ApiProperty()
-    title: string;
+    title: string; //tiêu đề
 
     @ApiProperty()
-    totalPage: number;
+    totalPage: number; //tổng số trang
 
     @ApiProperty()
-    author: string;
+    author: string; // tác giả
 
     constructor(title: string, totalPage: number,author: string) {
         this.title = title;
